@@ -32,7 +32,7 @@ use onebone\economyapi\EconomyAPI;
 use pocketmine\item\Item;
 use pocketmine\event\entity\EntityLevelChangeEvent;
 
-class EDB extends PluginBase implements Listener{
+class RunnersAndBeast extends PluginBase implements Listener{
 
     public $prefix = TE::GRAY . "[" . TE::GREEN . TE::BOLD . "Runners" . TE::AQUA . " & " . TE::RED . "Beast" . TE::RESET . TE::GRAY . "]";
 
