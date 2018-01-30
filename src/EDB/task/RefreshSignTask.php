@@ -18,7 +18,7 @@ class RefreshSignTask extends PluginTask{
         parent::__construct($plugin);
     }
 
-    public function onRun($tick){
+    public function onRun($tick) : void{
         $allplayers = $this->plugin->getServer()->getOnlinePlayers();
         $level = $this->plugin->getServer()->getDefaultLevel();
         $tiles = $level->getTiles();

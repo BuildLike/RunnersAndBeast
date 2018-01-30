@@ -21,11 +21,11 @@ class GameSendTask extends PluginTask{
         parent::__construct($plugin);
     }
 
-    public function getResetmap(){
+    public function getResetmap() : ResetMap{
         Return new ResetMap($this);
     }
 
-    public function onRun($tick){
+    public function onRun($tick): void{
         $config = new Config($this->plugin->getDataFolder() . "/config.yml", Config::YAML);
         $arenas = $config->get("arenas");
         if (!empty($arenas)) {

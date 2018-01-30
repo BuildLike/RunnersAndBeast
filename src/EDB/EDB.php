@@ -44,7 +44,7 @@ class EDB extends PluginBase implements Listener{
 
     public $op = [];
 
-    public function onEnable(){
+    public function onEnable() : void{
         $this->getLogger()->info(TE::GREEN . "Escape From The Beast Enable");
 
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
@@ -66,7 +66,7 @@ class EDB extends PluginBase implements Listener{
         $this->getServer()->getScheduler()->scheduleRepeatingTask(new RefreshSignTask($this), 20);
     }
 
-    public function onDisable(){
+    public function onDisable() : void{
         $config = new Config($this->getDataFolder() . "/config.yml", Config::YAML);
         $slots = new Config($this->getDataFolder() . "/slots.yml", Config::YAML);
         if ($config->get("arenas") != null) {
@@ -99,7 +99,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function reload($lev){
+    public function reload($lev) : void{
         if ($this->getServer()->isLevelLoaded($lev)) {
             $this->getServer()->unloadLevel($this->getServer()->getLevelByName($lev));
         }
@@ -108,10 +108,9 @@ class EDB extends PluginBase implements Listener{
         $zip->extractTo($this->getServer()->getDataPath() . 'worlds');
         $zip->close();
         unset($zip);
-        return true;
     }
 
-    public function onDeath(PlayerDeathEvent $event){
+    public function onDeath(PlayerDeathEvent $event) : void{
         $jugador = $event->getEntity();
         $mapa = $jugador->getLevel()->getFolderName();
         if (in_array($mapa, $this->arenas)) {
@@ -132,7 +131,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function chang($pl){
+    public function chang($pl) : void{
         $level = $pl->getLevel()->getFolderName();
         if (in_array($level, $this->arenas)) {
             $slots = new Config($this->getDataFolder() . "/slots.yml", Config::YAML);
@@ -200,7 +199,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function enCambioMundo(EntityLevelChangeEvent $event){
+    public function enCambioMundo(EntityLevelChangeEvent $event) : void{
         $pl = $event->getEntity();
         if ($pl instanceof Player) {
             $lev = $event->getOrigin();
@@ -272,7 +271,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function onLog(PlayerLoginEvent $event){
+    public function onLog(PlayerLoginEvent $event) : void{
         $player = $event->getPlayer();
         if (in_array($player->getLevel()->getFolderName(), $this->arenas)) {
             $player->getInventory()->clearAll();
@@ -282,7 +281,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function onQuit(PlayerQuitEvent $event){
+    public function onQuit(PlayerQuitEvent $event) : void{
         $pl = $event->getPlayer();
         $level = $pl->getLevel()->getFolderName();
         if (in_array($level, $this->arenas)) {
@@ -293,7 +292,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function onBlockBr(BlockBreakEvent $event){
+    public function onBlockBr(BlockBreakEvent $event) : void{
         $player = $event->getPlayer();
         $level = $player->getLevel()->getFolderName();
         if (in_array($level, $this->arenas)) {
@@ -301,7 +300,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function onBlockPl(BlockPlaceEvent $event){
+    public function onBlockPl(BlockPlaceEvent $event) : void{
         $player = $event->getPlayer();
         $level = $player->getLevel()->getFolderName();
         if (in_array($level, $this->arenas)) {
@@ -309,7 +308,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function onDam(EntityDamageEvent $event){
+    public function onDam(EntityDamageEvent $event) : void{
         if ($event instanceof EntityDamageByEntityEvent) {
             $player = $event->getEntity();
             $level = $player->getLevel()->getFolderName();
@@ -325,7 +324,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function onCommand(CommandSender $player, Command $cmd, $label, array $args){
+    public function onCommand(CommandSender $player, Command $cmd, $label, array $args) : bool{
         switch ($cmd->getName()) {
             case "edb":
                 if ($player->isOp()) {
@@ -383,7 +382,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function onInteract(PlayerInteractEvent $event){
+    public function onInteract(PlayerInteractEvent $event) : void{
         $player = $event->getPlayer();
         $block = $event->getBlock();
         $tile = $player->getLevel()->getTile($block);
@@ -579,7 +578,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function refreshArenas(){
+    public function refreshArenas() : void{
         $config = new Config($this->getDataFolder() . "/config.yml", Config::YAML);
         $config->set("arenas", $this->arenas);
         foreach ($this->arenas as $arena) {
@@ -589,7 +588,7 @@ class EDB extends PluginBase implements Listener{
         $config->save();
     }
 
-    public function zipper($player, $name){
+    public function zipper($player, $name) : void{
         $path = realpath($player->getServer()->getDataPath() . 'worlds/' . $name);
         $zip = new \ZipArchive;
         @mkdir($this->getDataFolder() . 'arenas/', 0755);

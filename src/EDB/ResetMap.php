@@ -8,7 +8,7 @@ Class ResetMap{
         $this->plugin = $plugin;
     }
 
-    public function reload($lev){
+    public function reload($lev) : void{
         $name = $lev->getFolderName();
         if ($this->plugin->getOwner()->getServer()->isLevelLoaded($name)) {
             $this->plugin->getOwner()->getServer()->unloadLevel($this->plugin->getOwner()->getServer()->getLevelByName($name));
@@ -19,6 +19,5 @@ Class ResetMap{
         $zip->close();
         unset($zip);
         $this->plugin->getOwner()->getServer()->loadLevel($name);
-        return true;
     }
 }
