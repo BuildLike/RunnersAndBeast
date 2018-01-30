@@ -34,7 +34,7 @@ use pocketmine\event\entity\EntityLevelChangeEvent;
 
 class EDB extends PluginBase implements Listener{
 
-    public $prefix = TE::GRAY . "[" . TE::GREEN . TE::BOLD . "Runners" . TE::AQUA . " & " . TE::RED . "Beasts" . TE::RESET . TE::GRAY . "]";
+    public $prefix = TE::GRAY . "[" . TE::GREEN . TE::BOLD . "Runners" . TE::AQUA . " & " . TE::RED . "Beast" . TE::RESET . TE::GRAY . "]";
 
     public $mode = 0;
 
@@ -45,7 +45,7 @@ class EDB extends PluginBase implements Listener{
     public $op = [];
 
     public function onEnable(){
-        $this->getLogger()->info(TE::GREEN . "Escapa De La Bestia ENABLE");
+        $this->getLogger()->info(TE::GREEN . "Escape From The Beast Enable");
 
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         if (class_exists(EconomyAPI::class)) {
@@ -93,7 +93,7 @@ class EDB extends PluginBase implements Listener{
             $slots->set("slot18" . $arena, 0);
             $slots->set("slot19" . $arena, 0);
             $slots->set("slot20" . $arena, 0);
-            $config->set($arena . "inicio", 0);
+            $config->set($arena . "start", 0);
             $slots->save();
             $this->reload($arena);
         }
@@ -338,7 +338,7 @@ class EDB extends PluginBase implements Listener{
                                     array_push($this->arenas, $args[1]);
                                     $this->currentLevel = $args[1];
                                     $this->mode = 1;
-                                    $player->sendMessage($this->prefix . "Toca Spawn Corredores!");
+                                    $player->sendMessage($this->prefix . "Touch spawn of runners!");
                                     $player->setGamemode(1);
                                     array_push($this->op, $player->getName());
                                     $player->teleport($this->getServer()->getLevelByName($args[1])->getSafeSpawn(), 0, 0);
@@ -354,8 +354,8 @@ class EDB extends PluginBase implements Listener{
                             $player->sendMessage($this->prefix . "Invalid Command.");
                         }
                     } else {
-                        $player->sendMessage($this->prefix . " §bEscapa De La Bestia Comandos!");
-                        $player->sendMessage($this->prefix . " §b/edb make [world]: Crear el juego de EdlB!");
+                        $player->sendMessage($this->prefix . " §bEscape From The Beast Commands!");
+                        $player->sendMessage($this->prefix . " §b/edb make [world]: Create the EDLB game!");
                     }
                 }
                 return true;
@@ -367,7 +367,7 @@ class EDB extends PluginBase implements Listener{
                         if ($config->get($args[0] . "StartTime") != null) {
                             $config->set($args[0] . "StartTime", 5);
                             $config->save();
-                            $player->sendMessage($this->prefix . "§aEmpezando en 5...");
+                            $player->sendMessage($this->prefix . "§aStarting i 5...");
                         }
                     } else {
                         $level = $player->getLevel()->getFolderName();
@@ -375,7 +375,7 @@ class EDB extends PluginBase implements Listener{
                         if ($config->get($level . "StartTime") != null) {
                             $config->set($level . "StartTime", 5);
                             $config->save();
-                            $player->sendMessage($this->prefix . "§cEmpezando en 5...");
+                            $player->sendMessage($this->prefix . "§cStarting i 5...");
                         }
                     }
                 }
@@ -390,7 +390,7 @@ class EDB extends PluginBase implements Listener{
 
         if ($tile instanceof Sign) {
             if (($this->mode == 26) && (in_array($player->getName(), $this->op))) {
-                $tile->setText(TE::AQUA . "[Unirse]", TE::GREEN . "0 / 20", "§f" . $this->currentLevel, $this->prefix);
+                $tile->setText(TE::AQUA . "[Join]", TE::GREEN . "0 / 20", "§f" . $this->currentLevel, $this->prefix);
                 $this->refreshArenas();
                 $this->currentLevel = "";
                 $this->mode = 0;
@@ -399,124 +399,123 @@ class EDB extends PluginBase implements Listener{
             } else {
                 $text = $tile->getText();
                 if ($text[3] == $this->prefix) {
-                    if ($text[0] == TE::AQUA . "[Unirse]") {
+                    if ($text[0] == TE::AQUA . "[Join]") {
                         $config = new Config($this->getDataFolder() . "/config.yml", Config::YAML);
                         $slots = new Config($this->getDataFolder() . "/slots.yml", Config::YAML);
                         $namemap = str_replace("§f", "", $text[2]);
                         $level = $this->getServer()->getLevelByName($namemap);
-                        if (strpos($player->getNameTag(), "§c(Bestia)") !== false) {
-                            $team = TE::RED . "Bestia";
+                        if (strpos($player->getNameTag(), "§c(Beast)") !== false) {
+                            $team = TE::RED . "Beast";
                             if ($slots->get("slot6" . $namemap) == null) {
                                 $thespawn = $config->get($namemap . "Spawn2");
                                 $slots->set("slot6" . $namemap, $player->getName());
                             } else {
-                                $player->sendMessage($this->prefix . TE::RED . "Ya hay Bestia en este juego.");
-                                goto sinequipo;
+                                $player->sendMessage($this->prefix . TE::RED . "There is already Beast in this game.");
+                                goto noequip;
                             }
                         } elseif ($slots->get("slot1" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot1" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot2" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot2" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot3" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot3" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot4" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot4" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot5" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot5" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot6" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn2");
                             $slots->set("slot6" . $namemap, $player->getName());
-                            $player->setNameTag("§c(Bestia)" . TE::GOLD . $player->getName());
-                            $team = TE::RED . "Bestia";
+                            $player->setNameTag("§c(Beast)" . TE::GOLD . $player->getName());
+                            $team = TE::RED . "Beast";
                         } elseif ($slots->get("slot7" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot7" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot8" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot8" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot9" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot9" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot10" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot10" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot11" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn2");
                             $slots->set("slot11" . $namemap, $player->getName());
-                            $player->setNameTag("§c(Bestia)" . TE::GREEN . $player->getName());
-                            $team = TE::RED . "Bestia";
+                            $player->setNameTag("§c(Beast)" . TE::GREEN . $player->getName());
+                            $team = TE::RED . "Beast";
                         } elseif ($slots->get("slot12" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot12" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot13" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot13" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot14" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot14" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot15" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot15" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot16" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn2");
                             $slots->set("slot16" . $namemap, $player->getName());
-                            $player->setNameTag("§c(Bestia)" . TE::GOLD . $player->getName());
-                            $team = TE::RED . "Bestia";
+                            $player->setNameTag("§c(Beast)" . TE::GOLD . $player->getName());
+                            $team = TE::RED . "Beast";
                         } elseif ($slots->get("slot17" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot17" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot18" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot18" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot19" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn1");
                             $slots->set("slot19" . $namemap, $player->getName());
                             $player->setNameTag("§b(Runner)" . TE::GREEN . $player->getName());
-                            $team = TE::AQUA . "Corredor";
+                            $team = TE::AQUA . "Runner";
                         } elseif ($slots->get("slot20" . $namemap) == null) {
                             $thespawn = $config->get($namemap . "Spawn2");
                             $slots->set("slot20" . $namemap, $player->getName());
-                            $player->setNameTag("§c(Bestia)" . TE::GREEN . $player->getName());
-                            $team = TE::RED . "Bestia";
+                            $player->setNameTag("§c(Beast)" . TE::GREEN . $player->getName());
+                            $team = TE::RED . "Beast";
                         } else {
-                            nohay:
-                            $player->sendMessage($this->prefix . TE::RED . "No hay lugares disponibles.");
-                            goto sinequipo;
+                            $player->sendMessage($this->prefix . TE::RED . "No places available.");
+                            goto noequip;
                         }
                         $slots->save();
                         $player->getInventory()->clearAll();
@@ -527,7 +526,7 @@ class EDB extends PluginBase implements Listener{
                         $spawn = new Position($thespawn[0] + 0.5, $thespawn[1], $thespawn[2] + 0.5, $level);
                         $level->loadChunk($spawn->getFloorX(), $spawn->getFloorZ());
                         $player->teleport($spawn, 0, 0);
-                        if (strpos($player->getNameTag(), "§c(Bestia)") !== false) {
+                        if (strpos($player->getNameTag(), "§c(Beast)") !== false) {
                             $player->setGamemode(0);
                             $player->getInventory()->setHelmet(Item::get(Item::DIAMOND_HELMET));
                             $player->getInventory()->setChestplate(Item::get(Item::DIAMOND_CHESTPLATE));
@@ -541,11 +540,11 @@ class EDB extends PluginBase implements Listener{
                             $player->getInventory()->sendArmorContents($player);
                             $player->getInventory()->setHotbarSlotIndex(0, 0);
                         }
-                        $player->sendMessage($this->prefix . "-[corredor=runner|bestia=beast]-    you are a " . $team);
+                        $player->sendMessage($this->prefix . "-[runner|beast]-    you are a " . $team);
                         foreach ($level->getPlayers() as $playersinarena) {
                             $playersinarena->sendMessage($player->getNameTag() . " §f joined");
                         }
-                        sinequipo:
+                        noequip:
                     } else {
                         $player->sendMessage($this->prefix . "you cant join now");
                     }
@@ -558,7 +557,7 @@ class EDB extends PluginBase implements Listener{
               $block->getY() + 1,
               $block->getZ(),
             ]);
-            $player->sendMessage($this->prefix . "Spawn Corredores registrado!");
+            $player->sendMessage($this->prefix . "Spawn Runneres registered!");
             $this->mode++;
             $config->save();
         } elseif (in_array($player->getName(), $this->op) && $this->mode == 2) {
@@ -568,10 +567,10 @@ class EDB extends PluginBase implements Listener{
               $block->getY() + 1,
               $block->getZ(),
             ]);
-            $player->sendMessage($this->prefix . "Spawn Bestia registrado!");
+            $player->sendMessage($this->prefix . "Spawn Beast registered!");
             $config->set("arenas", $this->arenas);
-            $config->set($this->currentLevel . "inicio", 0);
-            $player->sendMessage($this->prefix . "Toca un cartel para registrar Arena!");
+            $config->set($this->currentLevel . "start", 0);
+            $player->sendMessage($this->prefix . "Touch a sign to register Arena!");
             $spawn = $this->getServer()->getDefaultLevel()->getSafeSpawn();
             $this->getServer()->getDefaultLevel()->loadChunk($spawn->getFloorX(), $spawn->getFloorZ());
             $player->teleport($spawn, 0, 0);

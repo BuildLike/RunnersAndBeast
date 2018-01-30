@@ -33,12 +33,12 @@ class RefreshSignTask extends PluginTask{
                             $aop = $aop + 1;
                         }
                     }
-                    $ingame = TE::AQUA . "[Unirse]";
+                    $ingame = TE::AQUA . "[Join]";
                     $config = new Config($this->plugin->getDataFolder() . "/config.yml", Config::YAML);
                     if ($config->get($namemap . "PlayTime") != 515) {
                         $ingame = TE::DARK_PURPLE . "[In game]";
                     } elseif ($aop >= 20) {
-                        $ingame = TE::GOLD . "[full]";
+                        $ingame = TE::GOLD . "[Full]";
                     }
                     $t->setText($ingame, TE::GREEN . $aop . " / 20", $text[2], $this->prefix);
                 }

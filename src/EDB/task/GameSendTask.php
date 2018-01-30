@@ -38,13 +38,13 @@ class GameSendTask extends PluginTask{
                     if (count($playersArena) == 0) {
                         $config->set($arena . "PlayTime", 515);
                         $config->set($arena . "StartTime", 50);
-                        $config->set($arena . "inicio", 0);
+                        $config->set($arena . "start", 0);
                     } else {
                         if (count($playersArena) >= 6) {
-                            $config->set($arena . "inicio", 1);
+                            $config->set($arena . "start", 1);
                             $config->save();
                         }
-                        if ($config->get($arena . "inicio") == 1) {
+                        if ($config->get($arena . "start") == 1) {
                             if ($timeToStart > 0) {
                                 $timeToStart--;
                                 foreach ($playersArena as $pl) {
@@ -80,10 +80,10 @@ class GameSendTask extends PluginTask{
                                     array_push($colors, $pl->getNameTag());
                                 }
                                 $names = implode("-", $colors);
-                                $bestia = substr_count($names, "§c(Bestia)");
+                                $bestia = substr_count($names, "§c(Beast)");
                                 $corredor = substr_count($names, "§b(Runner)");
                                 foreach ($playersArena as $pla) {
-                                    if (strpos($pla->getNameTag(), "§c(Bestia)") !== false) {
+                                    if (strpos($pla->getNameTag(), "§c(Beast)") !== false) {
                                         $x = $pla->x;
                                         $z = $pla->z;
                                     }
@@ -95,17 +95,17 @@ class GameSendTask extends PluginTask{
                                     $z3 = pow($z1 - $z, 2);
                                     $lol = $x3 + $z3;
                                     $dist = intval(sqrt($lol));
-                                    if (strpos($pla->getNameTag(), "§c(Bestia)") === false) {
-                                        $pla->sendPopup(TE::BOLD . TE::RED . "Beast:" . $bestia . TE::AQUA . " Runners:" . $corredor . TE::YELLOW . " Dist. Bestia:" . TE::LIGHT_PURPLE . $dist . TE::RESET);
+                                    if (strpos($pla->getNameTag(), "§c(Beast)") === false) {
+                                        $pla->sendPopup(TE::BOLD . TE::RED . "Beast:" . $bestia . TE::AQUA . " Runners:" . $corredor . TE::YELLOW . " Dist. Beast:" . TE::LIGHT_PURPLE . $dist . TE::RESET);
                                     }
                                 }
                                 if ($aop >= 1) {
                                     $winner = null;
                                     if ($bestia != 0 && $corredor == 0) {
-                                        $winner = TE::RED . "Bestia" . TE::GREEN . " was eliminated by " . TE::AQUA . "Corredores" . TE::GREEN . " en ";
+                                        $winner = TE::RED . "Beast" . TE::GREEN . " was eliminated by " . TE::AQUA . "Runners" . TE::GREEN . " en ";
                                     }
                                     if ($bestia == 0 && $corredor != 0) {
-                                        $winner = TE::AQUA . "Corredores" . TE::GREEN . " eliminated " . TE::RED . "Bestia" . TE::GREEN . " en ";
+                                        $winner = TE::AQUA . "Runners" . TE::GREEN . " eliminated " . TE::RED . "Beast" . TE::GREEN . " en ";
                                     }
                                     if ($winner != null) {
                                         foreach ($playersArena as $pl) {
@@ -122,7 +122,7 @@ class GameSendTask extends PluginTask{
                                             $this->getResetmap()->reload($levelArena);
                                             $config->set($arena . "PlayTime", 515);
                                             $config->set($arena . "StartTime", 50);
-                                            $config->set($arena . "inicio", 0);
+                                            $config->set($arena . "start", 0);
                                             $config->save();
                                         }
                                     }
@@ -162,7 +162,7 @@ class GameSendTask extends PluginTask{
                                 if ($time == 500) {
                                     foreach ($playersArena as $pl) {
                                         $levelArena->addSound(new AnvilUseSound($pl));
-                                        $pl->sendMessage(TE::GREEN . ">> " . TE::RED . "LA BESTIA HA SIDO LIBERADA" . TE::RESET);
+                                        $pl->sendMessage(TE::GREEN . ">> " . TE::RED . "THE BEAST HAS BEEN RELEASED" . TE::RESET);
                                     }
                                     $tiles = $levelArena->getTiles();
                                     foreach ($tiles as $tile) {
@@ -199,12 +199,12 @@ class GameSendTask extends PluginTask{
                                             $pl->removeAllEffects();
                                             $pl->setFood(20);
                                             $pl->setHealth(20);
-                                            if (strpos($pl->getNameTag(), "§c(Bestia)") === false) {
+                                            if (strpos($pl->getNameTag(), "§c(Beast)") === false) {
                                                 $this->plugin->api->addMoney($pl, 1000);
                                             }
                                             $pl->setNameTag($pl->getName());
                                             $this->getResetmap()->reload($levelArena);
-                                            $config->set($arena . "inicio", 0);
+                                            $config->set($arena . "start", 0);
                                             $config->save();
                                         }
                                         $time = 515;
@@ -222,11 +222,11 @@ class GameSendTask extends PluginTask{
                                     $pl->setHealth(20);
                                     $pl->setFood(20);
                                     $pl->setNameTag($pl->getName());
-                                    if (strpos($pl->getNameTag(), "§c(Bestia)") === false) {
+                                    if (strpos($pl->getNameTag(), "§c(Beast)") === false) {
                                         $this->plugin->api->addMoney($pl, 1000);
                                     }
                                     $this->getResetmap()->reload($levelArena);
-                                    $config->set($arena . "inicio", 0);
+                                    $config->set($arena . "start", 0);
                                     $config->save();
                                 }
                                 $config->set($arena . "PlayTime", 515);
