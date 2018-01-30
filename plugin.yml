@@ -1,13 +1,13 @@
-name: EDLBDoDo
-main: EDLB\EDLB
-api: [1.0.0, 2.0.0]
-version: Nether
-author: KaitoDoDo
+name:                 EDB-Pro
+main:                 EDB\EDB
+api:                  [1.0.0, 2.0.0]
+version:              Nether
+author:               KaitoDoDo
 
 commands:
     edlb:
-        usage: /edlb <make>
-        description: CreateGame
+        usage:        /edlb <make>
+        description:  CreateGame
     edlbstart:
-        usage: /edlbstart
-        description: StartGame
+        usage:        /edlbstart
+        description:  StartGame
