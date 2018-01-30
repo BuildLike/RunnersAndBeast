@@ -25,7 +25,7 @@ class GameSendTask extends PluginTask{
         Return new ResetMap($this);
     }
 
-    public function onRun($tick): void{
+    public function onRun($tick) : void{
         $config = new Config($this->plugin->getDataFolder() . "/config.yml", Config::YAML);
         $arenas = $config->get("arenas");
         if (!empty($arenas)) {
@@ -130,26 +130,9 @@ class GameSendTask extends PluginTask{
                                 $time--;
                                 if ($time == 514) {
                                     $slots = new Config($this->plugin->getDataFolder() . "/slots.yml", Config::YAML);
-                                    $slots->set("slot1" . $arena, 0);
-                                    $slots->set("slot2" . $arena, 0);
-                                    $slots->set("slot3" . $arena, 0);
-                                    $slots->set("slot4" . $arena, 0);
-                                    $slots->set("slot5" . $arena, 0);
-                                    $slots->set("slot6" . $arena, 0);
-                                    $slots->set("slot7" . $arena, 0);
-                                    $slots->set("slot8" . $arena, 0);
-                                    $slots->set("slot9" . $arena, 0);
-                                    $slots->set("slot10" . $arena, 0);
-                                    $slots->set("slot11" . $arena, 0);
-                                    $slots->set("slot12" . $arena, 0);
-                                    $slots->set("slot13" . $arena, 0);
-                                    $slots->set("slot14" . $arena, 0);
-                                    $slots->set("slot15" . $arena, 0);
-                                    $slots->set("slot16" . $arena, 0);
-                                    $slots->set("slot17" . $arena, 0);
-                                    $slots->set("slot18" . $arena, 0);
-                                    $slots->set("slot19" . $arena, 0);
-                                    $slots->set("slot20" . $arena, 0);
+                                    for ($i = 1; $i < 21; ++$i) {
+                                        $slots->set("slot{$i}{$arena}", 0);
+                                    }
                                     $slots->save();
                                     foreach ($playersArena as $pl) {
                                         $pl->sendMessage(TE::YELLOW . ">--------------------------------");

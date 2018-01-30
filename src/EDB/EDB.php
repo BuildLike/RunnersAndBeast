@@ -73,26 +73,9 @@ class EDB extends PluginBase implements Listener{
             $this->arenas = $config->get("arenas");
         }
         foreach ($this->arenas as $arena) {
-            $slots->set("slot1" . $arena, 0);
-            $slots->set("slot2" . $arena, 0);
-            $slots->set("slot3" . $arena, 0);
-            $slots->set("slot4" . $arena, 0);
-            $slots->set("slot5" . $arena, 0);
-            $slots->set("slot6" . $arena, 0);
-            $slots->set("slot7" . $arena, 0);
-            $slots->set("slot8" . $arena, 0);
-            $slots->set("slot9" . $arena, 0);
-            $slots->set("slot10" . $arena, 0);
-            $slots->set("slot11" . $arena, 0);
-            $slots->set("slot12" . $arena, 0);
-            $slots->set("slot13" . $arena, 0);
-            $slots->set("slot14" . $arena, 0);
-            $slots->set("slot15" . $arena, 0);
-            $slots->set("slot16" . $arena, 0);
-            $slots->set("slot17" . $arena, 0);
-            $slots->set("slot18" . $arena, 0);
-            $slots->set("slot19" . $arena, 0);
-            $slots->set("slot20" . $arena, 0);
+            for ($i = 1; $i < 21; ++$i) {
+                $slots->set("slot{$i}{$arena}", 0);
+            }
             $config->set($arena . "start", 0);
             $slots->save();
             $this->reload($arena);
@@ -135,65 +118,10 @@ class EDB extends PluginBase implements Listener{
         $level = $pl->getLevel()->getFolderName();
         if (in_array($level, $this->arenas)) {
             $slots = new Config($this->getDataFolder() . "/slots.yml", Config::YAML);
-            if ($slots->get("slot1" . $level) == $pl->getName()) {
-                $slots->set("slot1" . $level, 0);
-            }
-            if ($slots->get("slot2" . $level) == $pl->getName()) {
-                $slots->set("slot2" . $level, 0);
-            }
-            if ($slots->get("slot3" . $level) == $pl->getName()) {
-                $slots->set("slot3" . $level, 0);
-            }
-            if ($slots->get("slot4" . $level) == $pl->getName()) {
-                $slots->set("slot4" . $level, 0);
-            }
-            if ($slots->get("slot5" . $level) == $pl->getName()) {
-                $slots->set("slot5" . $level, 0);
-            }
-            if ($slots->get("slot6" . $level) == $pl->getName()) {
-                $slots->set("slot6" . $level, 0);
-            }
-            if ($slots->get("slot7" . $level) == $pl->getName()) {
-                $slots->set("slot7" . $level, 0);
-            }
-            if ($slots->get("slot8" . $level) == $pl->getName()) {
-                $slots->set("slot8" . $level, 0);
-            }
-            if ($slots->get("slot9" . $level) == $pl->getName()) {
-                $slots->set("slot9" . $level, 0);
-            }
-            if ($slots->get("slot10" . $level) == $pl->getName()) {
-                $slots->set("slot10" . $level, 0);
-            }
-            if ($slots->get("slot11" . $level) == $pl->getName()) {
-                $slots->set("slot11" . $level, 0);
-            }
-            if ($slots->get("slot12" . $level) == $pl->getName()) {
-                $slots->set("slot12" . $level, 0);
-            }
-            if ($slots->get("slot13" . $level) == $pl->getName()) {
-                $slots->set("slot13" . $level, 0);
-            }
-            if ($slots->get("slot14" . $level) == $pl->getName()) {
-                $slots->set("slot14" . $level, 0);
-            }
-            if ($slots->get("slot15" . $level) == $pl->getName()) {
-                $slots->set("slot15" . $level, 0);
-            }
-            if ($slots->get("slot16" . $level) == $pl->getName()) {
-                $slots->set("slot16" . $level, 0);
-            }
-            if ($slots->get("slot17" . $level) == $pl->getName()) {
-                $slots->set("slot17" . $level, 0);
-            }
-            if ($slots->get("slot18" . $level) == $pl->getName()) {
-                $slots->set("slot18" . $level, 0);
-            }
-            if ($slots->get("slot19" . $level) == $pl->getName()) {
-                $slots->set("slot19" . $level, 0);
-            }
-            if ($slots->get("slot20" . $level) == $pl->getName()) {
-                $slots->set("slot20" . $level, 0);
+            for ($i = 1; $i < 21; ++$i) {
+                if ($slots->get($key = "slot{$i}{$level}") === $pl->getName()) {
+                    $slots->set("$key", 0);
+                }
             }
             $slots->save();
         }
@@ -206,65 +134,10 @@ class EDB extends PluginBase implements Listener{
             if ($lev instanceof Level && in_array($lev->getFolderName(), $this->arenas)) {
                 $level = $lev->getFolderName();
                 $slots = new Config($this->getDataFolder() . "/slots.yml", Config::YAML);
-                if ($slots->get("slot1" . $level) == $pl->getName()) {
-                    $slots->set("slot1" . $level, 0);
-                }
-                if ($slots->get("slot2" . $level) == $pl->getName()) {
-                    $slots->set("slot2" . $level, 0);
-                }
-                if ($slots->get("slot3" . $level) == $pl->getName()) {
-                    $slots->set("slot3" . $level, 0);
-                }
-                if ($slots->get("slot4" . $level) == $pl->getName()) {
-                    $slots->set("slot4" . $level, 0);
-                }
-                if ($slots->get("slot5" . $level) == $pl->getName()) {
-                    $slots->set("slot5" . $level, 0);
-                }
-                if ($slots->get("slot6" . $level) == $pl->getName()) {
-                    $slots->set("slot6" . $level, 0);
-                }
-                if ($slots->get("slot7" . $level) == $pl->getName()) {
-                    $slots->set("slot7" . $level, 0);
-                }
-                if ($slots->get("slot8" . $level) == $pl->getName()) {
-                    $slots->set("slot8" . $level, 0);
-                }
-                if ($slots->get("slot9" . $level) == $pl->getName()) {
-                    $slots->set("slot9" . $level, 0);
-                }
-                if ($slots->get("slot10" . $level) == $pl->getName()) {
-                    $slots->set("slot10" . $level, 0);
-                }
-                if ($slots->get("slot11" . $level) == $pl->getName()) {
-                    $slots->set("slot11" . $level, 0);
-                }
-                if ($slots->get("slot12" . $level) == $pl->getName()) {
-                    $slots->set("slot12" . $level, 0);
-                }
-                if ($slots->get("slot13" . $level) == $pl->getName()) {
-                    $slots->set("slot13" . $level, 0);
-                }
-                if ($slots->get("slot14" . $level) == $pl->getName()) {
-                    $slots->set("slot14" . $level, 0);
-                }
-                if ($slots->get("slot15" . $level) == $pl->getName()) {
-                    $slots->set("slot15" . $level, 0);
-                }
-                if ($slots->get("slot16" . $level) == $pl->getName()) {
-                    $slots->set("slot16" . $level, 0);
-                }
-                if ($slots->get("slot17" . $level) == $pl->getName()) {
-                    $slots->set("slot17" . $level, 0);
-                }
-                if ($slots->get("slot18" . $level) == $pl->getName()) {
-                    $slots->set("slot18" . $level, 0);
-                }
-                if ($slots->get("slot19" . $level) == $pl->getName()) {
-                    $slots->set("slot19" . $level, 0);
-                }
-                if ($slots->get("slot20" . $level) == $pl->getName()) {
-                    $slots->set("slot20" . $level, 0);
+                for ($i = 1; $i < 21; ++$i) {
+                    if ($slots->get($key = "slot{$i}{$level}") === $pl->getName()) {
+                        $slots->set("$key", 0);
+                    }
                 }
                 $slots->save();
             }
