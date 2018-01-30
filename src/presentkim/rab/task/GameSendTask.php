@@ -1,8 +1,8 @@
 <?php
 
-namespace EDB\task;
+namespace presentkim\rab\task;
 
-use EDB\ResetMap;
+use presentkim\rab\ResetMap;
 use pocketmine\level\Level;
 use pocketmine\level\sound\AnvilUseSound;
 use pocketmine\level\sound\PopSound;

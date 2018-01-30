@@ -6,10 +6,10 @@
  * PD: no digo que este plugin sea mio, solo le agregue mas slots..
  */
 
-namespace EDB;
+namespace presentkim\rab;
 
-use EDB\task\GameSendTask;
-use EDB\task\RefreshSignTask;
+use presentkim\rab\task\GameSendTask;
+use presentkim\rab\task\RefreshSignTask;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\utils\TextFormat as TE;

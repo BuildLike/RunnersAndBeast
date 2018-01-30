@@ -1,6 +1,6 @@
 <?php
 
-namespace EDB;
+namespace presentkim\rab;
 
 Class ResetMap{
 
