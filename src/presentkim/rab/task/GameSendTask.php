@@ -10,14 +10,12 @@ use pocketmine\scheduler\PluginTask;
 use pocketmine\tile\Sign;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as TE;
+use presentkim\rab\RunnersAndBeast as Plugin;
 
 class GameSendTask extends PluginTask{
 
-    public $prefix = "";
-
     public function __construct($plugin){
         $this->plugin = $plugin;
-        $this->prefix = $this->plugin->prefix;
         parent::__construct($plugin);
     }
 
@@ -110,7 +108,7 @@ class GameSendTask extends PluginTask{
                                     if ($winner != null) {
                                         foreach ($playersArena as $pl) {
                                             foreach ($this->plugin->getServer()->getOnlinePlayers() as $plpl) {
-                                                $plpl->sendMessage($this->prefix . TE::YELLOW . ">> " . $winner . TE::AQUA . $arena);
+                                                $plpl->sendMessage(Plugin::$prefix . TE::YELLOW . ">> " . $winner . TE::AQUA . $arena);
                                             }
                                             $pl->getInventory()->clearAll();
                                             $pl->removeAllEffects();
@@ -165,19 +163,19 @@ class GameSendTask extends PluginTask{
                                     $minutes = $time / 60;
                                     if (is_int($minutes) && $minutes > 0) {
                                         foreach ($playersArena as $pl) {
-                                            $pl->sendMessage($this->prefix . TE::YELLOW . $minutes . " " . TE::GREEN . "minutes remaining");
+                                            $pl->sendMessage(Plugin::$prefix . TE::YELLOW . $minutes . " " . TE::GREEN . "minutes remaining");
                                         }
                                     } else {
                                         if ($time == 30 || $time == 15 || $time == 10 || $time == 5 || $time == 4 || $time == 3 || $time == 2 || $time == 1) {
                                             foreach ($playersArena as $pl) {
-                                                $pl->sendMessage($this->prefix . TE::YELLOW . $time . " " . TE::GREEN . "seconds remaining");
+                                                $pl->sendMessage(Plugin::$prefix . TE::YELLOW . $time . " " . TE::GREEN . "seconds remaining");
                                             }
                                         }
                                     }
                                     if ($time <= 0) {
                                         foreach ($playersArena as $pl) {
                                             $pl->teleport($this->plugin->getServer()->getDefaultLevel()->getSafeSpawn(), 0, 0);
-                                            $pl->sendMessage($this->prefix . TE::AQUA . "Runners" . TE::GREEN . " eliminated  " . TE::RED . "Beast" . TE::GREEN . " in " . TE::AQUA . $arena);
+                                            $pl->sendMessage(Plugin::$prefix . TE::AQUA . "Runners" . TE::GREEN . " eliminated  " . TE::RED . "Beast" . TE::GREEN . " in " . TE::AQUA . $arena);
                                             $pl->getInventory()->clearAll();
                                             $pl->removeAllEffects();
                                             $pl->setFood(20);
@@ -198,7 +196,7 @@ class GameSendTask extends PluginTask{
                         } else {
                             if ($timeToStart <= 0) {
                                 foreach ($playersArena as $pl) {
-                                    $this->getOwner()->getServer()->broadcastMessage($this->prefix . TE::AQUA . "Runners" . TE::GREEN . "eliminated" . TE::RED . "Beast" . TE::GREEN . " in " . TE::AQUA . $arena);
+                                    $this->getOwner()->getServer()->broadcastMessage(Plugin::$prefix . TE::AQUA . "Runners" . TE::GREEN . "eliminated" . TE::RED . "Beast" . TE::GREEN . " in " . TE::AQUA . $arena);
                                     $pl->teleport($this->getOwner()->getServer()->getDefaultLevel()->getSafeSpawn(), 0, 0);
                                     $pl->getInventory()->clearAll();
                                     $pl->removeAllEffects();

@@ -34,7 +34,7 @@ use pocketmine\event\entity\EntityLevelChangeEvent;
 
 class RunnersAndBeast extends PluginBase implements Listener{
 
-    public $prefix = TE::GRAY . "[" . TE::GREEN . TE::BOLD . "Runners" . TE::AQUA . " & " . TE::RED . "Beast" . TE::RESET . TE::GRAY . "]";
+    public static $prefix = TE::GRAY . "[" . TE::GREEN . TE::BOLD . "Runners" . TE::AQUA . " & " . TE::RED . "Beast" . TE::RESET . TE::GRAY . "]";
 
     public $mode = 0;
 
@@ -210,24 +210,24 @@ class RunnersAndBeast extends PluginBase implements Listener{
                                     array_push($this->arenas, $args[1]);
                                     $this->currentLevel = $args[1];
                                     $this->mode = 1;
-                                    $player->sendMessage($this->prefix . "Touch spawn of runners!");
+                                    $player->sendMessage(self::$prefix . "Touch spawn of runners!");
                                     $player->setGamemode(1);
                                     array_push($this->op, $player->getName());
                                     $player->teleport($this->getServer()->getLevelByName($args[1])->getSafeSpawn(), 0, 0);
                                     $name = $args[1];
                                     $this->zipper($player, $name);
                                 } else {
-                                    $player->sendMessage($this->prefix . "ERROR missing world.");
+                                    $player->sendMessage(self::$prefix . "ERROR missing world.");
                                 }
                             } else {
-                                $player->sendMessage($this->prefix . "ERROR missing parameters.");
+                                $player->sendMessage(self::$prefix . "ERROR missing parameters.");
                             }
                         } else {
-                            $player->sendMessage($this->prefix . "Invalid Command.");
+                            $player->sendMessage(self::$prefix . "Invalid Command.");
                         }
                     } else {
-                        $player->sendMessage($this->prefix . " §bEscape From The Beast Commands!");
-                        $player->sendMessage($this->prefix . " §b/edb make [world]: Create the EDLB game!");
+                        $player->sendMessage(self::$prefix . " §bEscape From The Beast Commands!");
+                        $player->sendMessage(self::$prefix . " §b/edb make [world]: Create the EDLB game!");
                     }
                 }
                 return true;
@@ -239,7 +239,7 @@ class RunnersAndBeast extends PluginBase implements Listener{
                         if ($config->get($args[0] . "StartTime") != null) {
                             $config->set($args[0] . "StartTime", 5);
                             $config->save();
-                            $player->sendMessage($this->prefix . "§aStarting i 5...");
+                            $player->sendMessage(self::$prefix . "§aStarting i 5...");
                         }
                     } else {
                         $level = $player->getLevel()->getFolderName();
@@ -247,7 +247,7 @@ class RunnersAndBeast extends PluginBase implements Listener{
                         if ($config->get($level . "StartTime") != null) {
                             $config->set($level . "StartTime", 5);
                             $config->save();
-                            $player->sendMessage($this->prefix . "§cStarting i 5...");
+                            $player->sendMessage(self::$prefix . "§cStarting i 5...");
                         }
                     }
                 }
@@ -262,15 +262,15 @@ class RunnersAndBeast extends PluginBase implements Listener{
 
         if ($tile instanceof Sign) {
             if (($this->mode == 26) && (in_array($player->getName(), $this->op))) {
-                $tile->setText(TE::AQUA . "[Join]", TE::GREEN . "0 / 20", "§f" . $this->currentLevel, $this->prefix);
+                $tile->setText(TE::AQUA . "[Join]", TE::GREEN . "0 / 20", "§f" . $this->currentLevel, self::$prefix);
                 $this->refreshArenas();
                 $this->currentLevel = "";
                 $this->mode = 0;
-                $player->sendMessage($this->prefix . "Arena Registered!");
+                $player->sendMessage(self::$prefix . "Arena Registered!");
                 array_shift($this->op);
             } else {
                 $text = $tile->getText();
-                if ($text[3] == $this->prefix) {
+                if ($text[3] == self::$prefix) {
                     if ($text[0] == TE::AQUA . "[Join]") {
                         $config = new Config($this->getDataFolder() . "/config.yml", Config::YAML);
                         $slots = new Config($this->getDataFolder() . "/slots.yml", Config::YAML);
@@ -282,7 +282,7 @@ class RunnersAndBeast extends PluginBase implements Listener{
                                 $thespawn = $config->get($namemap . "Spawn2");
                                 $slots->set("slot6" . $namemap, $player->getName());
                             } else {
-                                $player->sendMessage($this->prefix . TE::RED . "There is already Beast in this game.");
+                                $player->sendMessage(self::$prefix . TE::RED . "There is already Beast in this game.");
                                 goto noequip;
                             }
                         } elseif ($slots->get("slot1" . $namemap) == null) {
@@ -386,7 +386,7 @@ class RunnersAndBeast extends PluginBase implements Listener{
                             $player->setNameTag("§c(Beast)" . TE::GREEN . $player->getName());
                             $team = TE::RED . "Beast";
                         } else {
-                            $player->sendMessage($this->prefix . TE::RED . "No places available.");
+                            $player->sendMessage(self::$prefix . TE::RED . "No places available.");
                             goto noequip;
                         }
                         $slots->save();
@@ -412,13 +412,13 @@ class RunnersAndBeast extends PluginBase implements Listener{
                             $player->getInventory()->sendArmorContents($player);
                             $player->getInventory()->setHotbarSlotIndex(0, 0);
                         }
-                        $player->sendMessage($this->prefix . "-[runner|beast]-    you are a " . $team);
+                        $player->sendMessage(self::$prefix . "-[runner|beast]-    you are a " . $team);
                         foreach ($level->getPlayers() as $playersinarena) {
                             $playersinarena->sendMessage($player->getNameTag() . " §f joined");
                         }
                         noequip:
                     } else {
-                        $player->sendMessage($this->prefix . "you cant join now");
+                        $player->sendMessage(self::$prefix . "you cant join now");
                     }
                 }
             }
@@ -429,7 +429,7 @@ class RunnersAndBeast extends PluginBase implements Listener{
               $block->getY() + 1,
               $block->getZ(),
             ]);
-            $player->sendMessage($this->prefix . "Spawn Runneres registered!");
+            $player->sendMessage(self::$prefix . "Spawn Runneres registered!");
             $this->mode++;
             $config->save();
         } elseif (in_array($player->getName(), $this->op) && $this->mode == 2) {
@@ -439,10 +439,10 @@ class RunnersAndBeast extends PluginBase implements Listener{
               $block->getY() + 1,
               $block->getZ(),
             ]);
-            $player->sendMessage($this->prefix . "Spawn Beast registered!");
+            $player->sendMessage(self::$prefix . "Spawn Beast registered!");
             $config->set("arenas", $this->arenas);
             $config->set($this->currentLevel . "start", 0);
-            $player->sendMessage($this->prefix . "Touch a sign to register Arena!");
+            $player->sendMessage(self::$prefix . "Touch a sign to register Arena!");
             $spawn = $this->getServer()->getDefaultLevel()->getSafeSpawn();
             $this->getServer()->getDefaultLevel()->loadChunk($spawn->getFloorX(), $spawn->getFloorZ());
             $player->teleport($spawn, 0, 0);

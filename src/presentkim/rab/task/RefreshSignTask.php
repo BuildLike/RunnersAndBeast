@@ -7,14 +7,12 @@ use pocketmine\scheduler\PluginTask;
 use pocketmine\tile\Sign;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as TE;
+use presentkim\rab\RunnersAndBeast as Plugin;
 
 class RefreshSignTask extends PluginTask{
 
-    public $prefix = "";
-
     public function __construct($plugin){
         $this->plugin = $plugin;
-        $this->prefix = $this->plugin->prefix;
         parent::__construct($plugin);
     }
 
@@ -25,7 +23,7 @@ class RefreshSignTask extends PluginTask{
         foreach ($tiles as $t) {
             if ($t instanceof Sign) {
                 $text = $t->getText();
-                if ($text[3] == $this->prefix) {
+                if ($text[3] == Plugin::$prefix) {
                     $aop = 0;
                     $namemap = str_replace("§f", "", $text[2]);
                     foreach ($allplayers as $player) {
@@ -40,7 +38,7 @@ class RefreshSignTask extends PluginTask{
                     } elseif ($aop >= 20) {
                         $ingame = TE::GOLD . "[Full]";
                     }
-                    $t->setText($ingame, TE::GREEN . $aop . " / 20", $text[2], $this->prefix);
+                    $t->setText($ingame, TE::GREEN . $aop . " / 20", $text[2], Plugin::$prefix);
                 }
             }
         }
