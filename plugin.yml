@@ -1,7 +1,7 @@
 name:                 EDB-Pro
 main:                 EDB\EDB
 api:                  [3.0.0, 3.0.0-ALPHA10]
-version:              Nether
+version:              0.0.1
 authors:              [KaitoDoDo, UlisesGamer, PresentKim]
 
 commands:
