@@ -50,8 +50,7 @@ class EDB extends PluginBase implements Listener{
         $this->getLogger()->info(TE::GREEN . "Escapa De La Bestia ENABLE");
 
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->economy = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
-        if (!empty($this->economy)) {
+        if (class_exists(EconomyAPI::class)) {
             $this->api = EconomyAPI::getInstance();
         }
         @mkdir($this->getDataFolder());
