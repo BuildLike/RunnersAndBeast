@@ -2,8 +2,6 @@
 
 namespace EDB;
 
-use EDB\GameSender;
-
 Class ResetMap{
 
     public function __construct(GameSender $plugin){

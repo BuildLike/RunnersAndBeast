@@ -28,7 +28,6 @@ use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use onebone\economyapi\EconomyAPI;
-use EDB\ResetMap;
 use pocketmine\level\sound\PopSound;
 use pocketmine\level\sound\AnvilUseSound;
 use pocketmine\block\Air;
