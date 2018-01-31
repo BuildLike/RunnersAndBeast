@@ -5,9 +5,9 @@ version:              0.0.1
 authors:              [KaitoDoDo, UlisesGamer, PresentKim]
 
 commands:
-    edlb:
-        usage:        /edlb <make>
+    edb:
+        usage:        /edb <make>
         description:  CreateGame
-    edlbstart:
-        usage:        /edlbstart
+    edbstart:
+        usage:        /edbstart
         description:  StartGame
