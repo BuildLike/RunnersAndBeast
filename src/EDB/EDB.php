@@ -328,7 +328,7 @@ class EDB extends PluginBase implements Listener{
         }
     }
 
-    public function onCommand(CommandSender $player, Command $cmd, $label, array $args){
+    public function onCommand(CommandSender $player, Command $cmd, $label, array $args) : bool{
         switch ($cmd->getName()) {
             case "edb":
                 if ($player->isOp()) {
