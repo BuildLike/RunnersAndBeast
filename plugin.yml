@@ -5,6 +5,6 @@ version:              0.0.1
 authors:              [KaitoDoDo, UlisesGamer, PresentKim]
 
 commands:
-    rab:
-        usage:        /rab <make | start>
-        description:  Main command of RunnersAndBeast
+  rab:
+    usage:        /rab <make | start>
+    description:  Main command of RunnersAndBeast
