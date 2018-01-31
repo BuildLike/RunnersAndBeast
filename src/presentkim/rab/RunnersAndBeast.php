@@ -38,6 +38,10 @@ class RunnersAndBeast extends PluginBase implements Listener{
 
     public static $prefix = TE::GRAY . "[" . TE::GREEN . TE::BOLD . "Runners" . TE::AQUA . " & " . TE::RED . "Beast" . TE::RESET . TE::GRAY . "]";
 
+    public static function getInstance() : self{
+        return self::$instance;
+    }
+
     public $mode = 0;
 
     public $arenas = [];
@@ -45,6 +49,12 @@ class RunnersAndBeast extends PluginBase implements Listener{
     public $currentLevel = "";
 
     public $op = [];
+
+    public function onLoad() : void{
+        if (self::$instance === null) {
+            self::$instance = $this;
+        }
+    }
 
     public function onEnable() : void{
         $this->getLogger()->info(TE::GREEN . "Escape From The Beast Enable");
