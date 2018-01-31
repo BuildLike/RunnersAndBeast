@@ -34,6 +34,8 @@ use pocketmine\event\entity\EntityLevelChangeEvent;
 
 class RunnersAndBeast extends PluginBase implements Listener{
 
+    private static $instance = null;
+
     public static $prefix = TE::GRAY . "[" . TE::GREEN . TE::BOLD . "Runners" . TE::AQUA . " & " . TE::RED . "Beast" . TE::RESET . TE::GRAY . "]";
 
     public $mode = 0;
