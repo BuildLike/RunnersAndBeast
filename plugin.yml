@@ -5,9 +5,6 @@ version:              0.0.1
 authors:              [KaitoDoDo, UlisesGamer, PresentKim]
 
 commands:
-    edlb:
-        usage:        /edlb <make>
-        description:  CreateGame
-    edlbstart:
-        usage:        /edlbstart
-        description:  StartGame
+    rab:
+        usage:        /rab <make | start>
+        description:  Main command of RunnersAndBeast

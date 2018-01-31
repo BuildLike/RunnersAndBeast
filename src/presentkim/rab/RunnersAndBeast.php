@@ -198,46 +198,33 @@ class RunnersAndBeast extends PluginBase implements Listener{
     }
 
     public function onCommand(CommandSender $player, Command $cmd, $label, array $args) : bool{
-        switch ($cmd->getName()) {
-            case "edb":
-                if ($player->isOp()) {
-                    if (!empty($args[0])) {
-                        if ($args[0] == "make") {
-                            if (!empty($args[1])) {
-                                if (file_exists($this->getServer()->getDataPath() . "/worlds/" . $args[1])) {
-                                    $this->getServer()->loadLevel($args[1]);
-                                    $this->getServer()->getLevelByName($args[1])->loadChunk($this->getServer()->getLevelByName($args[1])->getSafeSpawn()->getFloorX(), $this->getServer()->getLevelByName($args[1])->getSafeSpawn()->getFloorZ());
-                                    array_push($this->arenas, $args[1]);
-                                    $this->currentLevel = $args[1];
-                                    $this->mode = 1;
-                                    $player->sendMessage(self::$prefix . "Touch spawn of runners!");
-                                    $player->setGamemode(1);
-                                    array_push($this->op, $player->getName());
-                                    $player->teleport($this->getServer()->getLevelByName($args[1])->getSafeSpawn(), 0, 0);
-                                    $name = $args[1];
-                                    $this->zipper($player, $name);
-                                } else {
-                                    $player->sendMessage(self::$prefix . "ERROR missing world.");
-                                }
-                            } else {
-                                $player->sendMessage(self::$prefix . "ERROR missing parameters.");
-                            }
+        if ($player->isOp()) {
+            if (!empty($args[0])) {
+                if ($args[0] == "make") {
+                    if (!empty($args[1])) {
+                        if (file_exists($this->getServer()->getDataPath() . "/worlds/" . $args[1])) {
+                            $this->getServer()->loadLevel($args[1]);
+                            $this->getServer()->getLevelByName($args[1])->loadChunk($this->getServer()->getLevelByName($args[1])->getSafeSpawn()->getFloorX(), $this->getServer()->getLevelByName($args[1])->getSafeSpawn()->getFloorZ());
+                            array_push($this->arenas, $args[1]);
+                            $this->currentLevel = $args[1];
+                            $this->mode = 1;
+                            $player->sendMessage(self::$prefix . "Touch spawn of runners!");
+                            $player->setGamemode(1);
+                            array_push($this->op, $player->getName());
+                            $player->teleport($this->getServer()->getLevelByName($args[1])->getSafeSpawn(), 0, 0);
+                            $name = $args[1];
+                            $this->zipper($player, $name);
                         } else {
-                            $player->sendMessage(self::$prefix . "Invalid Command.");
+                            $player->sendMessage(self::$prefix . "ERROR missing world.");
                         }
                     } else {
-                        $player->sendMessage(self::$prefix . " §bEscape From The Beast Commands!");
-                        $player->sendMessage(self::$prefix . " §b/edb make [world]: Create the EDLB game!");
+                        $player->sendMessage(self::$prefix . "ERROR missing parameters.");
                     }
-                }
-                return true;
-
-            case "edbstart":
-                if ($player->isOp()) {
-                    if (!empty($args[0])) {
+                } elseif ($args[0] == "start") {
+                    if (!empty($args[1])) {
                         $config = new Config($this->getDataFolder() . "/config.yml", Config::YAML);
-                        if ($config->get($args[0] . "StartTime") != null) {
-                            $config->set($args[0] . "StartTime", 5);
+                        if ($config->get($args[1] . "StartTime") != null) {
+                            $config->set($args[1] . "StartTime", 5);
                             $config->save();
                             $player->sendMessage(self::$prefix . "§aStarting i 5...");
                         }
@@ -250,9 +237,13 @@ class RunnersAndBeast extends PluginBase implements Listener{
                             $player->sendMessage(self::$prefix . "§cStarting i 5...");
                         }
                     }
+                } else {
+                    $player->sendMessage(self::$prefix . " §bEscape From The Beast Commands!");
+                    $player->sendMessage(self::$prefix . " §b/edb make [world]: Create the EDLB game!");
                 }
-                return true;
+            }
         }
+        return true;
     }
 
     public function onInteract(PlayerInteractEvent $event) : void{
