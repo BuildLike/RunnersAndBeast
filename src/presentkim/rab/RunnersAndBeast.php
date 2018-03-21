@@ -26,7 +26,7 @@ class RunnersAndBeast extends PluginBase{
 
     private static $instance = null;
 
-    public static $prefix = TE::GRAY . "[" . TE::GREEN . TE::BOLD . "Runners" . TE::AQUA . " & " . TE::RED . "Beast" . TE::RESET . TE::GRAY . "]";
+    public static $prefix = TE::GRAY . "[" . TE::GREEN . TE::BOLD . "몰" . TE::AQUA . " 라 " . TE::RED . "" . TE::RESET . TE::GRAY . "]";
 
     public static function getInstance() : self{
         return self::$instance;
@@ -152,7 +152,7 @@ class RunnersAndBeast extends PluginBase{
                         if ($config->get($args[1] . "StartTime") != null) {
                             $config->set($args[1] . "StartTime", 5);
                             $config->save();
-                            $player->sendMessage(self::$prefix . "§aStarting i 5...");
+                            $player->addTitle(self::$prefix . "§a5");
                         }
                     } else {
                         $level = $player->getLevel()->getFolderName();
@@ -160,7 +160,7 @@ class RunnersAndBeast extends PluginBase{
                         if ($config->get($level . "StartTime") != null) {
                             $config->set($level . "StartTime", 5);
                             $config->save();
-                            $player->sendMessage(self::$prefix . "§cStarting i 5...");
+                            $player->addTitle(self::$prefix . "§a5");
                         }
                     }
                 } else {
